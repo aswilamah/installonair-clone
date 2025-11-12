@@ -33,8 +33,8 @@ router.post('/', upload.single('appFile'), async (req, res) => {
     // Generate unique share ID
     const shareId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
-    // Create file URL (for production)
-    const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    // Create file URL (for production) - use the actual file URL
+    const fileUrl = `https://installonair-clone-production.up.railway.app/uploads/${req.file.filename}`;
 
     // Create app record in database
     const newApp = new App({
@@ -50,10 +50,13 @@ router.post('/', upload.single('appFile'), async (req, res) => {
 
     console.log('✅ File uploaded successfully:', shareId);
 
+    // FIX: Generate the CORRECT share URL that points to the backend install page
+    const shareUrl = `https://installonair-clone-production.up.railway.app/share/${shareId}`;
+
     res.json({
       success: true,
       message: 'File uploaded successfully!',
-      shareUrl: `${process.env.CLIENT_URL || 'http://localhost:5000'}/share/${shareId}`,
+      shareUrl: shareUrl, // This should point to backend install page
       app: {
         id: newApp._id,
         originalName: newApp.originalName,
