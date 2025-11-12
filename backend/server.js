@@ -27,8 +27,7 @@ console.log('🔄 Loading routes...');
 try {
   app.use('/api/upload', require('./routes/upload'));
   app.use('/share', require('./routes/share'));
-  app.use('/plist', require('./routes/plist'));
-  app.use('/files', require('./routes/files')); // Add files route
+  // Removed plist route - we don't need OTA installation
   console.log('✅ All routes loaded successfully');
 } catch (error) {
   console.log('❌ Route loading failed:', error.message);
