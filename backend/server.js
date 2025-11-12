@@ -9,14 +9,13 @@ console.log('🚀 Starting production server...');
 const app = express();
 
 // CORS configuration - allow all origins in production
-const corsOptions = {
-  origin: true, // Allow all origins
+app.use(cors({
+  origin: "*", // Allow all origins
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-};
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
+}));
 
-app.use(cors(corsOptions));
 app.use(express.json({ limit: '500mb' }));
 app.use(express.urlencoded({ extended: true, limit: '500mb' }));
 
@@ -29,6 +28,7 @@ try {
   app.use('/api/upload', require('./routes/upload'));
   app.use('/share', require('./routes/share'));
   app.use('/plist', require('./routes/plist'));
+  app.use('/files', require('./routes/files')); // Add files route
   console.log('✅ All routes loaded successfully');
 } catch (error) {
   console.log('❌ Route loading failed:', error.message);

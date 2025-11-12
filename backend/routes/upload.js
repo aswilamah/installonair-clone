@@ -16,6 +16,8 @@ router.post('/', upload.single('appFile'), async (req, res) => {
     }
 
     console.log('📁 File received:', req.file.originalname);
+    console.log('📁 File stored as:', req.file.filename);
+    console.log('📁 File path:', req.file.path);
 
     // Check if MongoDB is connected
     const mongoose = require('mongoose');
@@ -33,7 +35,7 @@ router.post('/', upload.single('appFile'), async (req, res) => {
     // Generate unique share ID
     const shareId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
-    // Create file URL (for production) - use the actual file URL
+    // Create file URL - FIXED: Use absolute URL for production
     const fileUrl = `https://installonair-clone-production.up.railway.app/uploads/${req.file.filename}`;
 
     // Create app record in database
@@ -49,14 +51,16 @@ router.post('/', upload.single('appFile'), async (req, res) => {
     await newApp.save();
 
     console.log('✅ File uploaded successfully:', shareId);
+    console.log('✅ File URL:', fileUrl);
 
-    // FIX: Generate the CORRECT share URL that points to the backend install page
+    // Generate the share URL
     const shareUrl = `https://installonair-clone-production.up.railway.app/share/${shareId}`;
 
     res.json({
       success: true,
       message: 'File uploaded successfully!',
-      shareUrl: shareUrl, // This should point to backend install page
+      shareUrl: shareUrl,
+      fileUrl: fileUrl, // Also return the file URL for debugging
       app: {
         id: newApp._id,
         originalName: newApp.originalName,
