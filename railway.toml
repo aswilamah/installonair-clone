@@ -2,7 +2,7 @@
 builder = "NIXPACKS"
 
 [deploy]
-startCommand = "cd backend && npm start"
+startCommand = "node railway-start.js"
 
 [service]
 rootDir = "./backend"

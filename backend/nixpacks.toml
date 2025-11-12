@@ -1,0 +1,11 @@
+[phases.setup]
+cmds = ["npm install"]
+
+[phases.build]
+cmds = ["echo 'Building backend...'"]
+
+[start]
+cmd = "node railway-start.js"
+
+[environment]
+NODE_ENV = "production"
