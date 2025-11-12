@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const App = require('../models/App');
 
+// Dynamic plist generation for iOS
 router.get('/:shareId', async (req, res) => {
   try {
     const app = await App.findOne({ shareId: req.params.shareId });
@@ -10,8 +11,13 @@ router.get('/:shareId', async (req, res) => {
       return res.status(404).send('Not found');
     }
 
+    // Set content type for plist
     res.set('Content-Type', 'application/xml');
+    res.set('Content-Disposition', 'attachment; filename="manifest.plist"');
 
+    const appName = app.originalName.replace('.ipa', '');
+    const bundleId = app.bundleId || `com.${appName.toLowerCase().replace(/[^a-z0-9]/g, '')}.app`;
+    
     const plist = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -31,19 +37,25 @@ router.get('/:shareId', async (req, res) => {
             <key>metadata</key>
             <dict>
                 <key>bundle-identifier</key>
-                <string>${app.bundleId || 'com.example.app'}</string>
+                <string>${bundleId}</string>
                 <key>bundle-version</key>
-                <string>${app.version || '1.0.0'}</string>
+                <string>${app.version || '1.0'}</string>
                 <key>kind</key>
                 <string>software</string>
                 <key>title</key>
-                <string>${app.originalName}</string>
+                <string>${appName}</string>
+                <key>subtitle</key>
+                <string>${appName}</string>
             </dict>
         </dict>
     </array>
 </dict>
 </plist>`;
 
+    console.log('📱 Generated plist for:', appName);
+    console.log('📦 Bundle ID:', bundleId);
+    console.log('🔗 IPA URL:', app.fileUrl);
+    
     res.send(plist);
 
   } catch (error) {
