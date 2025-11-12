@@ -8,32 +8,12 @@ console.log('🚀 Starting production server...');
 
 const app = express();
 
-// CORS configuration for production
+// CORS configuration - allow all origins in production
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    const allowedOrigins = [
-      'http://localhost:5173',
-      'https://frontend-pebt147ka-swilams-projects.vercel.app',
-      'https://frontend-git-main-swilams-projects.vercel.app',
-      'https://frontend-swilams-projects.vercel.app',
-      /\.vercel\.app$/ // Allow all Vercel deployments
-    ];
-    
-    if (allowedOrigins.some(pattern => {
-      if (typeof pattern === 'string') {
-        return origin === pattern;
-      }
-      return pattern.test(origin);
-    })) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
+  origin: true, // Allow all origins
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
@@ -63,10 +43,7 @@ const connectDB = async () => {
       throw new Error('MONGODB_URI is not defined in environment variables');
     }
     
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log('✅ MongoDB connected successfully');
     
     // Load routes after successful DB connection
