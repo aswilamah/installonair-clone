@@ -1,0 +1,26 @@
+{
+  "name": "installonair-backend",
+  "version": "1.0.0",
+  "description": "Backend for APK/IPA distribution service",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon --config nodemon.json server.js"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "bcryptjs": "*",
+    "cors": "*",
+    "dotenv": "*",
+    "express": "*",
+    "express-rate-limit": "*",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
+    "multer": "*",
+    "nanoid": "*"
+  },
+  "devDependencies": {
+    "@esbuild-kit/esm-loader": "^2.6.5",
+    "nodemon": "*"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "verbose": true,
+  "ignore": ["node_modules/", "uploads/"],
+  "watch": ["*.js", "routes/", "models/", "config/"],
+  "ext": "js,json",
+  "exec": "node server.js",
+  "restartable": "rs",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

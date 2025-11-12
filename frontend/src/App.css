@@ -1,0 +1,319 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  margin: 0;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 60px;
+  color: white;
+}
+
+.header h1 {
+  font-size: 3.5rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-card, .success-card {
+  background: white;
+  border-radius: 20px;
+  padding: 50px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.upload-icon, .success-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.upload-card h2, .success-card h2 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+}
+
+.upload-card p, .success-card p {
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.file-input-label input {
+  display: none;
+}
+
+.file-input-button {
+  display: inline-block;
+  background: #007AFF;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  border: none;
+  margin-bottom: 20px;
+}
+
+.file-input-button:hover {
+  background: #0056CC;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,122,255,0.3);
+}
+
+.file-input-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.progress-section {
+  margin: 20px 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #007AFF, #00C6FF);
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+.progress-text {
+  font-weight: 600;
+  color: #007AFF;
+  font-size: 14px;
+}
+
+.error-message {
+  background: #ffe6e6;
+  color: #d63031;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 20px 0;
+  border: 1px solid #ffcccc;
+  text-align: left;
+}
+
+.error-message strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.features {
+  margin-top: 30px;
+  text-align: left;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  color: #666;
+  padding: 10px 0;
+}
+
+.feature-icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
+  min-width: 24px;
+}
+
+/* QR Code Section */
+.qr-section {
+  margin: 30px 0;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.qr-section h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.qr-code-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  border: 2px solid #e9ecef;
+}
+
+.download-qr-button {
+  background: #17a2b8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  margin-top: 10px;
+}
+
+.download-qr-button:hover {
+  background: #138496;
+}
+
+/* Share Section */
+.share-section {
+  margin: 20px 0;
+}
+
+.share-section h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.share-url {
+  display: flex;
+  margin: 10px 0;
+  gap: 10px;
+}
+
+.url-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #f8f9fa;
+}
+
+.copy-button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  white-space: nowrap;
+}
+
+.copy-button:hover {
+  background: #218838;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.test-button, .upload-new-button {
+  padding: 15px 30px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.test-button {
+  background: #007AFF;
+  color: white;
+}
+
+.test-button:hover {
+  background: #0056CC;
+  transform: translateY(-2px);
+}
+
+.upload-new-button {
+  background: #6c757d;
+  color: white;
+}
+
+.upload-new-button:hover {
+  background: #545b62;
+  transform: translateY(-2px);
+}
+
+.footer {
+  text-align: center;
+  margin-top: 60px;
+  color: white;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px 15px;
+  }
+  
+  .header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .upload-card, .success-card {
+    padding: 30px 20px;
+  }
+  
+  .share-url {
+    flex-direction: column;
+  }
+  
+  .qr-code-container {
+    padding: 15px;
+  }
+}
