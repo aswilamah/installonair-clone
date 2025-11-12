@@ -23,6 +23,17 @@ app.use(express.urlencoded({ extended: true, limit: '500mb' }));
 // Serve uploaded files statically
 app.use('/uploads', express.static('uploads'));
 
+// Load routes IMMEDIATELY (don't wait for MongoDB)
+console.log('🔄 Loading routes...');
+try {
+  app.use('/api/upload', require('./routes/upload'));
+  app.use('/share', require('./routes/share'));
+  app.use('/plist', require('./routes/plist'));
+  console.log('✅ All routes loaded successfully');
+} catch (error) {
+  console.log('❌ Route loading failed:', error.message);
+}
+
 // Basic health check
 app.get('/api/health', (req, res) => {
   const dbStatus = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
@@ -45,22 +56,15 @@ const connectDB = async () => {
     
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('✅ MongoDB connected successfully');
-    
-    // Load routes after successful DB connection
-    app.use('/api/upload', require('./routes/upload'));
-    app.use('/share', require('./routes/share'));
-    app.use('/plist', require('./routes/plist'));
-    
-    console.log('✅ All routes loaded successfully');
   } catch (error) {
     console.log('❌ MongoDB connection failed:', error.message);
-    console.log('⚠️ Server will continue running without database connection');
+    console.log('⚠️ Server running without database - uploads will fail');
   }
 };
 
 const PORT = process.env.PORT || 10000;
 
-// Start server first, then connect to DB
+// Start server
 const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ Production server running on port ${PORT}`);
   console.log(`📍 Health check: ${process.env.RAILWAY_STATIC_URL || 'http://localhost:' + PORT}/api/health`);

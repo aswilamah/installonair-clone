@@ -3,16 +3,24 @@ const router = express.Router();
 const upload = require('../config/multerConfig');
 const App = require('../models/App');
 
+console.log('📤 Upload route loaded');
+
 // Single file upload route
 router.post('/', upload.single('appFile'), async (req, res) => {
+  console.log('📨 Upload request received');
+  
   try {
     if (!req.file) {
+      console.log('❌ No file uploaded');
       return res.status(400).json({ error: 'No file uploaded' });
     }
+
+    console.log('📁 File received:', req.file.originalname);
 
     // Check if MongoDB is connected
     const mongoose = require('mongoose');
     if (mongoose.connection.readyState !== 1) {
+      console.log('❌ MongoDB not connected');
       return res.status(500).json({ 
         error: 'Database not connected. Please try again later.' 
       });
@@ -22,7 +30,7 @@ router.post('/', upload.single('appFile'), async (req, res) => {
     const fileExtension = req.file.originalname.toLowerCase().split('.').pop();
     const platform = fileExtension === 'apk' ? 'android' : 'ios';
 
-    // Generate unique share ID using a simple method (replace nanoid)
+    // Generate unique share ID
     const shareId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
     // Create file URL (for production)
@@ -40,6 +48,8 @@ router.post('/', upload.single('appFile'), async (req, res) => {
 
     await newApp.save();
 
+    console.log('✅ File uploaded successfully:', shareId);
+
     res.json({
       success: true,
       message: 'File uploaded successfully!',
@@ -54,7 +64,7 @@ router.post('/', upload.single('appFile'), async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Upload error:', error);
+    console.error('❌ Upload error:', error);
     res.status(500).json({ 
       error: 'Failed to upload file',
       details: error.message 
@@ -64,6 +74,7 @@ router.post('/', upload.single('appFile'), async (req, res) => {
 
 // Error handling for multer
 router.use((error, req, res, next) => {
+  console.error('❌ Multer error:', error);
   if (error.code === 'LIMIT_FILE_SIZE') {
     return res.status(400).json({ error: 'File too large. Maximum size is 500MB' });
   }
