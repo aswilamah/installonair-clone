@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const App = require('../models/App');
 
-// Share page route - SIMPLE like InstallOnAir.com
+// Share page route - AIPK Branding
 router.get('/:shareId', async (req, res) => {
   try {
     const app = await App.findOne({ shareId: req.params.shareId });
@@ -24,14 +24,14 @@ router.get('/:shareId', async (req, res) => {
 
     const appName = app.originalName.replace('.ipa', '').replace('.apk', '');
 
-    // SIMPLE HTML like InstallOnAir.com
+    // AIPK Branded HTML
     res.send(`
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Install ${appName}</title>
+        <title>${appName} - AIPK</title>
         <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
             body { 
@@ -55,7 +55,7 @@ router.get('/:shareId', async (req, res) => {
             .app-icon {
                 width: 80px;
                 height: 80px;
-                background: #007AFF;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 border-radius: 16px;
                 margin: 0 auto 20px;
                 display: flex;
@@ -63,6 +63,13 @@ router.get('/:shareId', async (req, res) => {
                 justify-content: center;
                 font-size: 32px;
                 color: white;
+            }
+            .brand {
+                color: #667eea;
+                font-size: 14px;
+                font-weight: 600;
+                margin-bottom: 5px;
+                letter-spacing: 0.5px;
             }
             h1 {
                 color: #1d1d1f;
@@ -77,7 +84,7 @@ router.get('/:shareId', async (req, res) => {
             }
             .download-button {
                 display: inline-block;
-                background: #007AFF;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 color: white;
                 padding: 16px 40px;
                 border-radius: 12px;
@@ -92,8 +99,8 @@ router.get('/:shareId', async (req, res) => {
                 max-width: 280px;
             }
             .download-button:hover {
-                background: #0056CC;
                 transform: translateY(-1px);
+                box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
             }
             .instructions {
                 color: #86868b;
@@ -117,6 +124,13 @@ router.get('/:shareId', async (req, res) => {
                 font-weight: 500;
                 margin-bottom: 10px;
             }
+            .footer {
+                margin-top: 30px;
+                padding-top: 20px;
+                border-top: 1px solid #f0f0f0;
+                color: #86868b;
+                font-size: 12px;
+            }
         </style>
     </head>
     <body>
@@ -124,6 +138,8 @@ router.get('/:shareId', async (req, res) => {
             <div class="app-icon">
                 ${app.platform === 'ios' ? '📱' : '🤖'}
             </div>
+            
+            <div class="brand">AIPK</div>
             
             <div class="platform-badge">
                 ${app.platform === 'ios' ? 'iOS APP' : 'ANDROID APP'}
@@ -152,11 +168,14 @@ router.get('/:shareId', async (req, res) => {
                     <p>3. Trust the developer in Settings if required</p>
                 `}
             </div>
+
+            <div class="footer">
+                Shared via AIPK • Files auto-delete after 30 days
+            </div>
         </div>
 
         <script>
             function trackDownload() {
-                // Simple analytics
                 console.log('Download started for ${appName}');
             }
         </script>

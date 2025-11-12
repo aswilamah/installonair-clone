@@ -83,7 +83,7 @@ body {
 
 .file-input-button {
   display: inline-block;
-  background: #007AFF;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 15px 30px;
   border-radius: 12px;
@@ -96,9 +96,8 @@ body {
 }
 
 .file-input-button:hover {
-  background: #0056CC;
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,122,255,0.3);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
 }
 
 .file-input-button:disabled {
@@ -123,14 +122,14 @@ body {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #007AFF, #00C6FF);
+  background: linear-gradient(90deg, #667eea, #764ba2);
   transition: width 0.3s ease;
   border-radius: 4px;
 }
 
 .progress-text {
   font-weight: 600;
-  color: #007AFF;
+  color: #667eea;
   font-size: 14px;
 }
 
@@ -141,12 +140,6 @@ body {
   border-radius: 8px;
   margin: 20px 0;
   border: 1px solid #ffcccc;
-  text-align: left;
-}
-
-.error-message strong {
-  display: block;
-  margin-bottom: 5px;
 }
 
 .features {
@@ -270,13 +263,13 @@ body {
 }
 
 .test-button {
-  background: #007AFF;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
 .test-button:hover {
-  background: #0056CC;
   transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
 }
 
 .upload-new-button {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { QRCodeSVG } from 'qrcode.react'
+import { API_BASE_URL } from './config'
 import './App.css'
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
     formData.append('appFile', file)
 
     try {
-      const response = await axios.post('http://localhost:8080/api/upload', formData, {
+      const response = await axios.post(`${API_BASE_URL}/api/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -50,8 +51,7 @@ function App() {
 
       setShareUrl(response.data.shareUrl)
     } catch (err) {
-      console.error('Upload error:', err)
-      setError(err.response?.data?.error || err.message || 'Upload failed. Make sure backend is running on port 8080.')
+      setError(err.response?.data?.error || 'Upload failed')
     } finally {
       setUploading(false)
       setUploadProgress(0)
@@ -80,7 +80,7 @@ function App() {
       ctx.drawImage(img, 0, 0)
       const pngFile = canvas.toDataURL('image/png')
       const downloadLink = document.createElement('a')
-      downloadLink.download = 'install-qr-code.png'
+      downloadLink.download = 'aipk-qr-code.png'
       downloadLink.href = pngFile
       downloadLink.click()
     }
@@ -92,7 +92,7 @@ function App() {
     <div className="app">
       <div className="container">
         <header className="header">
-          <h1>📱 InstallOnAir</h1>
+          <h1>📱 AIPK</h1>
           <p>Share your Android APK and iOS IPA files easily</p>
         </header>
 
@@ -130,7 +130,7 @@ function App() {
 
                 {error && (
                   <div className="error-message">
-                    <strong>Error:</strong> {error}
+                    {error}
                   </div>
                 )}
 
@@ -210,7 +210,7 @@ function App() {
         </main>
 
         <footer className="footer">
-          <p>© 2024 InstallOnAir Clone. For testing purposes only.</p>
+          <p>© 2024 AIPK. For testing purposes only.</p>
         </footer>
       </div>
     </div>
